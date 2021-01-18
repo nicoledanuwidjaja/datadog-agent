@@ -11,6 +11,7 @@ class CustomActionData
     ~CustomActionData();
 
     bool init(MSIHANDLE hInstall);
+    
     bool init(const std::wstring &initstring);
 
     bool present(const std::wstring &key) const;
@@ -60,4 +61,5 @@ class CustomActionData
     void findSuppliedUserInfo(std::wstring &input, std::wstring &computed_domain, std::wstring &computed_user);
     bool parseUsernameData();
     bool parseSysprobeData();
+    bool updateYamlConfig();
 };
