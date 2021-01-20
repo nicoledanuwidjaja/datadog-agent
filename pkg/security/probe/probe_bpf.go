@@ -188,7 +188,7 @@ func (p *Probe) Init() error {
 		return errors.Wrap(err, "couldn't create events statistics monitor")
 	}
 
-	if err := p.resolvers.Start(); err != nil {
+	if err := p.resolvers.Start(p.ctx); err != nil {
 		return err
 	}
 
@@ -451,7 +451,7 @@ func (p *Probe) handleEvent(CPU uint64, data []byte) {
 		}
 	case ForkEventType:
 		if _, err := event.Exec.UnmarshalEvent(data[offset:], event); err != nil {
-			log.Errorf("failed to decode exec event: %s (offset %d, len %d)", err, offset, len(data))
+			log.Errorf("failed to decode fork event: %s (offset %d, len %d)", err, offset, len(data))
 			return
 		}
 		event.updateProcessCachePointer(p.resolvers.ProcessResolver.AddForkEntry(event.Process.Pid, event.processCacheEntry))
