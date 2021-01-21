@@ -2,13 +2,22 @@ package http
 
 import (
 	model "github.com/DataDog/agent-payload/process"
+	"github.com/DataDog/datadog-agent/pkg/process/util"
 	"github.com/DataDog/datadog-agent/pkg/util/log"
 	"github.com/DataDog/sketches-go/ddsketch"
 )
 
-// DDSketch uses a relative error guarantee, meaning that quantiles in the sketch are accurate to within
-// RelativeAccuracy percent (ie if the actual value at p50 is 100, with a relative accuracy of 0.01 the
-// value calculated will be between 99 and 101)
+// Key is an identifier for a group of HTTP transactions
+type Key struct {
+	SourceIP   util.Address
+	DestIP     util.Address
+	SourcePort uint16
+	DestPort   uint16
+}
+
+// RelativeAccuracy defines the acceptable error in quantile values calculated by DDSketch.
+// For example, if the actual value at p50 is 100, with a relative accuracy of 0.01 the value calculated
+// will be between 99 and 101
 const RelativeAccuracy = 0.01
 
 // RequestStats stores stats for HTTP requests to a particular path, organized by the class
