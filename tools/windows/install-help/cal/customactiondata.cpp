@@ -171,7 +171,12 @@ bool CustomActionData::installSysprobe() const
     return doInstallSysprobe;
 }
 
-const TargetMachine &CustomActionData::GetTargetMachine() const
+bool CustomActionData::UserParamMismatch() const
+{
+    return userParamMismatch;
+}
+
+const ITargetMachine &CustomActionData::GetTargetMachine() const
 {
     return machine;
 }
