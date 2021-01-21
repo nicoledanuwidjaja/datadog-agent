@@ -58,6 +58,7 @@ type ProcessCacheEntrySerializer struct {
 	Name          string     `json:"name"`
 	ContainerPath string     `json:"executable_container_path,omitempty"`
 	Path          string     `json:"executable_path"`
+	Comm          string     `json:"comm,omitempty"`
 	Inode         uint64     `json:"executable_inode"`
 	MountID       uint32     `json:"executable_mount_id"`
 	TTY           string     `json:"tty,omitempty"`
@@ -176,19 +177,21 @@ func newProcessCacheEntrySerializer(pce *ProcessCacheEntry, e *Event, useEvent b
 			User:  user,
 			Group: group,
 		},
-		Pid:      pid,
-		PPid:     ppid,
-		Tid:      tid,
-		UID:      uid,
-		GID:      gid,
-		Name:     pce.Comm,
-		Path:     pce.ResolveInode(e),
-		Inode:    pce.Inode,
-		MountID:  pce.MountID,
-		TTY:      pce.ResolveTTY(e),
-		ForkTime: getTimeIfNotZero(pce.ForkTimestamp),
-		ExecTime: getTimeIfNotZero(pce.ExecTimestamp),
-		ExitTime: getTimeIfNotZero(pce.ExitTimestamp),
+		Pid:           pid,
+		PPid:          ppid,
+		Tid:           tid,
+		UID:           uid,
+		GID:           gid,
+		Name:          pce.ResolveName(e),
+		Path:          pce.ResolveInode(e),
+		ContainerPath: pce.ResolveContainerPath(e),
+		Comm:          pce.ResolveComm(e),
+		Inode:         pce.Inode,
+		MountID:       pce.MountID,
+		TTY:           pce.ResolveTTY(e),
+		ForkTime:      getTimeIfNotZero(pce.ForkTimestamp),
+		ExecTime:      getTimeIfNotZero(pce.ExecTimestamp),
+		ExitTime:      getTimeIfNotZero(pce.ExitTimestamp),
 	}
 }
 

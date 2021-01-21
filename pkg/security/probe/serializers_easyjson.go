@@ -176,6 +176,8 @@ func easyjsonA970e379DecodeGithubComDataDogDatadogAgentPkgSecurityProbe1(in *jle
 			out.ContainerPath = string(in.String())
 		case "executable_path":
 			out.Path = string(in.String())
+		case "comm":
+			out.Comm = string(in.String())
 		case "executable_inode":
 			out.Inode = uint64(in.Uint64())
 		case "executable_mount_id":
@@ -305,6 +307,11 @@ func easyjsonA970e379EncodeGithubComDataDogDatadogAgentPkgSecurityProbe1(out *jw
 		out.RawString(prefix)
 		out.String(string(in.Path))
 	}
+	if in.Comm != "" {
+		const prefix string = ",\"comm\":"
+		out.RawString(prefix)
+		out.String(string(in.Comm))
+	}
 	{
 		const prefix string = ",\"executable_inode\":"
 		out.RawString(prefix)
@@ -406,6 +413,8 @@ func easyjsonA970e379DecodeGithubComDataDogDatadogAgentPkgSecurityProbe2(in *jle
 			out.ContainerPath = string(in.String())
 		case "executable_path":
 			out.Path = string(in.String())
+		case "comm":
+			out.Comm = string(in.String())
 		case "executable_inode":
 			out.Inode = uint64(in.Uint64())
 		case "executable_mount_id":
@@ -505,6 +514,11 @@ func easyjsonA970e379EncodeGithubComDataDogDatadogAgentPkgSecurityProbe2(out *jw
 		const prefix string = ",\"executable_path\":"
 		out.RawString(prefix)
 		out.String(string(in.Path))
+	}
+	if in.Comm != "" {
+		const prefix string = ",\"comm\":"
+		out.RawString(prefix)
+		out.String(string(in.Comm))
 	}
 	{
 		const prefix string = ",\"executable_inode\":"
